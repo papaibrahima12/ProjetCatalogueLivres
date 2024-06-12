@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Charger les fichiers Excel
 catalogues = {
-    'catalogue1': pd.read_excel('./Travail_connecteur_TDM.ods'),
+    'catalogue1': pd.read_excel('./Catalogue_TDM.ods'),
     # 'catalogue2': pd.read_excel('chemin/vers/votre/catalogue2.xlsx')
     # Ajoutez d'autres catalogues si nécessaire
 }
@@ -18,7 +18,7 @@ def home():
 def search():
     titre = request.args.get('titre')
     auteur = request.args.get('auteur')
-    date_pub = request.args.get('date_pub')
+    annee_pub = request.args.get('annee_pub')
 
     resultats = []
 
@@ -29,8 +29,8 @@ def search():
             df_result = df_result[df_result['TITRE'].str.contains(titre, case=False, na=False)]
         if auteur:
             df_result = df_result[df_result['AUTEUR'].str.contains(auteur, case=False, na=False)]
-        if date_pub:
-            df_result = df_result[df_result['ANNEE DE PUBLICATION'] == date_pub]
+        if annee_pub:
+            df_result = df_result[df_result['ANNEE DE PUBLICATION'] == annee_pub]
         
         resultats.extend(df_result.to_dict(orient='records'))
 
